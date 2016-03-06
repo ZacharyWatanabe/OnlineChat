@@ -6,9 +6,7 @@ You can compile by visting the main directory and entering `javac */*.java` into
 
 
 2. Run:
-You can run the program by first starting the server side of the program. Go into the server directory and enter the command `java ChatServerTester <server_port>` will being the execution of the server portion of the system.   
-   
-Now you can start the client side of the system. Go into the client directory and enter the command `java ChatClientTester <server_ip_address> <server_port>`
+You can run the program by first starting the server side of the program. Go into the server directory and enter the command `java ChatServerTester <server_port>` will being the execution of the server portion of the system. Now you can start the client side of the system. Go into the client directory and enter the command `java ChatClientTester <server_ip_address> <server_port>`
 
 3. Authentication:
 Hopefully the application can guide you through this part. Use, 'y' or 'n' responses, and give non-blank inputs for username and password prompts.
