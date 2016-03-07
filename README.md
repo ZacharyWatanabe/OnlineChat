@@ -11,7 +11,7 @@ You can run the program by first starting the server side of the program. Go int
 3. Authentication:
 Hopefully the application can guide you through this part. Use, 'y' or 'n' responses, and give non-blank inputs for username and password prompts.
 
-4. Chat Usage:
+4. Chat Usage:  
 You can use the following chat commands:  
 1) whoelse: shows the names of other connected users  
 2) wholasthr: shows the names of other users who connected in the last hr  
