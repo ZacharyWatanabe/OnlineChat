@@ -14,7 +14,7 @@ Hopefully the application can guide you through this part. Use, 'y' or 'n' respo
 4. Chat Usage:  
 You can use the following chat commands:  
 1) `whoelse`: shows the names of other connected users  
-2) `wholasthr`: shows the names of other users who connected in the last hour
+2) `wholasthr`: shows the names of other users who connected in the last hour   
 3) `message <user> <message>`: sends a private message to a user  
 4) `broadcast <message>`: broadcasts message to all connected users  
 5) `block <user>`: block future messages from a user  
