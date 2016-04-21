@@ -9,19 +9,19 @@ import java.util.*;
 
 public class User {
     
-    //User data
+	//User data
 	private String userName;
 	private String password;
     
-    //Login state and last login time
+	//Login state and last login time
 	private boolean login = false;
 	private long loginTime = 0;
     
-    //Queue of messages and list of other users who have been blocked by current user.
-	private ArrayList<Message> messages = new ArrayList<Message>();
-	private ArrayList<String> blocked = new ArrayList<String>();
+	//Queue of messages and list of other users who have been blocked by current user.
+	private ArrayList<Message> unrecievedMessages = new ArrayList<Message>();
+	private ArrayList<String> blockedByUser = new ArrayList<String>();
 	
-    private int totalMessages = 0;
+    	private int totalMessages = 0;
     
 	//Constructor Parses user authentication data
 	public User(String userInfo) {
@@ -34,13 +34,14 @@ public class User {
 	public String getUsername() {
 		return userName;
 	}
+
 	public String getUserPassword() {
 		return password;
 	}
 	
 	//Login accessor and modifier methods 
 	public void updateLogin(boolean current){
-	    loginTime = System.currentTimeMillis();
+		loginTime = System.currentTimeMillis();
 		login = current;
 	}
     
@@ -55,45 +56,45 @@ public class User {
 	//Recieves messages and adds them to a message queue
 	public void addMessage(Message recieved){
 		boolean found = false; 
-		for(int i = 0; !found && i < blocked.size(); i++){
-			if(blocked.get(i).equals(recieved.sender)){
+		for(int i = 0; !found && i < blockedByUser.size(); i++){
+			if(blockedByUser.get(i).equals(recieved.sender)){
 				found = true;
 			}
 		}
 		if(!found){
-			messages.add(recieved);
+			unrecievedMessages.add(recieved);
 		}
-        totalMessages ++;
+        	totalMessages ++;
 	}
     
-    //Deletes messages sent by user from other user's inboxes
-    public void takebackMessages(String sender){
-        for(Iterator<Message> it = messages.iterator(); it.hasNext();){
-            Message mssg = it.next();
-            if(sender.equals(mssg.sender)) it.remove();
-        }
-    }
+	//Deletes messages sent by user from other user's inboxes
+	public void takebackMessages(String sender){
+		for(Iterator<Message> it = unrecievedMessages.iterator(); it.hasNext();){
+			Message mssg = it.next();
+			if(sender.equals(mssg.sender)) it.remove();
+		}
+	}
     
-    //Counts messages
-    public int messageCount(){
-        return messages.size();
-    }
+	//Counts messages
+	public int messageCount(){
+		return unrecievedMessages.size();
+	}
     
-    public int getTotalMessageCount(){
-        return totalMessages;
-    }    
+	public int getTotalMessageCount(){
+		return totalMessages;
+	}    
     
-    //Delivers message queue to client.
+	//Delivers message queue to client.
 	public String pushRecievedMessage(int index){
 		Message output = null;
 		if(index == 0) {
-			int size = messages.size()-1;
-			output = messages.get(size);
-			messages.remove(index);
+			int size = unrecievedMessages.size()-1;
+			output = unrecievedMessages.get(size);
+			unrecievedMessages.remove(index);
 		}
 		else {
-			output = messages.get(index);
-			messages.remove(index);
+			output = unrecievedMessages.get(index);
+			unrecievedMessages.remove(index);
 		}	
 		
 		return (output.sender + ": " + output.message);
@@ -102,28 +103,26 @@ public class User {
 	//Manages blocking other users from messaging this client
 	public void blockUser(String userName){
 		boolean found = false;
-		for(int i = 0; !found && i < blocked.size(); i++){
-			if(blocked.get(i).equals(userName)){
-                found = true;
-            }	
+		for(int i = 0; !found && i < blockedByUser.size(); i++){
+			if(blockedByUser.get(i).equals(userName)){
+               			found = true;
+            		}	
 		}
 		if(!found){
-			blocked.add(userName); 
-        }    
+			blockedByUser.add(userName); 
+       		}    
 	}
     
-    //Manages unblocking other users from messaging this client
-    //@return if user was unblockable
+	//Manages unblocking other users from messaging this client
+	//@return if user was unblockable
 	public boolean unblockUser(String userName){
-		for(int i = 0; i < blocked.size(); i++){
-			if(userName.equals(blocked.get(i))){
-				blocked.remove(i);
-                return true;
+		for(int i = 0; i < blockedByUser.size(); i++){
+			if(userName.equals(blockedByUser.get(i))){
+				blockedByUser.remove(i);
+                		return true;
 			}
 		}
-        return false;
-	}
-    
-    
+		return false;
+	} 
 }
 
